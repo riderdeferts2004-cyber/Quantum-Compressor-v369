@@ -2,7 +2,6 @@ import streamlit as st
 import os
 import time
 from compressor import smart_compress, smart_decompress, calculate_sha256
-from ai_addon import ai_pre_process, ai_playback_engine # हमारे दोनों AI ऐड-ऑन फंक्शन
 
 st.set_page_config(page_title='SmartCompressor Quantum Enterprise v4.5', page_icon='⚡', layout='centered')
 
