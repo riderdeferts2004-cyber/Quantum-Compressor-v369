@@ -3,8 +3,7 @@ import os
 import subprocess
 import hashlib
 import time
-import static_ffmpeg
-static_ffmpeg.add_paths()
+
 
 def calculate_sha256(file_path):
     """फाइल की 100% शुद्धता जांचने के लिए डिजिटल फिंगरप्रिंट (SHA-256) जनरेशन"""
