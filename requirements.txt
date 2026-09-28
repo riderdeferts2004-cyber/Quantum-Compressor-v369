@@ -1,2 +1,3 @@
-stremlit
+streamlit 
 zstandard
+static-ffmpeg
