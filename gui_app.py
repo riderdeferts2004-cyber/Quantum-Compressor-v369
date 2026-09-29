@@ -41,8 +41,7 @@ st.write('---')
 
 operation = st.radio("आपको क्या करना है? (Select Action):", ['🔴 कंप्रेस करें (Compress)', '🔵 डीकंप्रेस करें (Decompress)'], horizontal=True)
 st.write('---')
-operation = st.radio("आपको क्या करना है? (Select Action):", ('🔴 कंप्रेस करें (Compress)', '🔵 डीकंप्रेस करें (Decompress)'), horizontal=True)
-st.write("---")
+
 
 # 🔴 1. पुराने st.text_input को हटाकर यह असली वेब-फाइल अपलोडर बटन लगाया गया है
 uploaded_file = st.file_uploader("अपनी फ़ाइल यहाँ अपलोड करें (Upload your file here)", type=None)
