@@ -40,28 +40,37 @@ st.markdown('##### ##### 100% Lossless Architecture • Code & Media Adaptive �
 st.write('---')
 
 operation = st.radio("आपको क्या करना है? (Select Action):", ['🔴 कंप्रेस करें (Compress)', '🔵 डीकंप्रेस करें (Decompress)'], horizontal=True)
-
 st.write('---')
-file_name_input = st.text_input("📁 फ़ाइल का पूरा नाम टाइप करें (e.g., myvideo.mp4 या script.py):", value="heavy_text_100mb.txt")
+operation = st.radio("आपको क्या करना है? (Select Action):", ('🔴 कंप्रेस करें (Compress)', '🔵 डीकंप्रेस करें (Decompress)'), horizontal=True)
+st.write("---")
 
-if file_name_input:
-    input_path = os.path.abspath(file_name_input)
-    
-    if os.path.exists(input_path):
-        file_size_mb = os.path.getsize(input_path) / (1024 * 1024)
-        st.success(f"✔️ फ़ाइल मिल गई: [ {file_name_input} ] ({file_size_mb:.2f} MB)")
-        name_without_ext, ext = os.path.splitext(file_name_input)
+# 🔴 1. पुराने st.text_input को हटाकर यह असली वेब-फाइल अपलोडर बटन लगाया गया है
+uploaded_file = st.file_uploader("अपनी फ़ाइल यहाँ अपलोड करें (Upload your file here)", type=None)
+
+if uploaded_file is not None:
+    # 🔴 2. फ़ाइल को सर्वर पर टेम्पररी स्टोर करना ताकि आपका बैकएंड उसे प्रोसेस कर सके
+    input_path = os.path.join(".", uploaded_file.name)
+    with open(input_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
         
-        # ==========================================
-        # 🔴 कंप्रेस करने का लॉजिक (COMPRESS)
-        # ==========================================
-        if operation == '🔴 कंप्रेस करें (Compress)':
-            if ext.lower() in ['.mp4', '.mkv', '.avi', '.mov', '.flv', '.wmv']:
-                output_name = f"ai_compressed_{name_without_ext}{ext}"
-            else:
-                output_name = f"smart_archive_{name_without_ext}.zstd"
-                
-            output_pack = os.path.abspath(output_name)
+    file_size_mb = os.path.getsize(input_path) / (1024 * 1024)
+    st.success(f"📂 फ़ाइल मिल गई: **{uploaded_file.name}** ({file_size_mb:.2f} MB)")
+    
+    name_without_ext, ext = os.path.splitext(uploaded_file.name)
+
+    # ==================== COMPRESS LOGIC ====================
+    if '🔴 कंप्रेस करें' in operation:
+        st.markdown('##### ⚙️ इंजन ट्यूनिंग (Engine Tuning):')
+        engine_mode = st.select_slider(
+            'कम्प्रेशन मोड चुनें:',
+            options=['Ultrafast (Speed)', 'Balanced', 'Extreme (Max Size Saving)'],
+            value='Balanced'
+        )
+        
+        if ext.lower() in ['.mp4', '.mkv', '.avi', '.mov', '.flv', '.wmv']:
+            output_name = f"ai_compressed_{name_without_ext}{ext}"
+        else:
+            output_name = f"smart_archive_{name_without_ext}.zstd"
             
             if st.button("🚀 एआई मोड में कंप्रेस करें (Start Intelligent Compression)"):
                 status_text = st.empty()
