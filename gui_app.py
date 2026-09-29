@@ -112,7 +112,7 @@ if uploaded_file is not None:
         # ==========================================
         # 🔵 डीकंप्रेस करने का लॉजिक (DECOMPRESS) - FIXED FOR 0-SEC DELAY
         # ==========================================
-        elif operation == '🔵 डीकंप्रेस करें (Decompress)':
+        elif  '🔵DECOMPRESSION' in operation:
             output_name = f"extracted_{name_without_ext.replace('smart_archive_', '').replace('ai_compressed_', '')}{ext}"
             output_pack = os.path.abspath(output_name)
             
